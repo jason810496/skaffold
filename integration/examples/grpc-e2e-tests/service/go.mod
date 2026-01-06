@@ -1,6 +1,8 @@
 module github.com/GoogleContainerTools/skaffold/v2/integration/examples/grpc-e2e-tests/service
 
-go 1.19
+go 1.23.0
+
+toolchain go1.24.11
 
 require (
 	cloud.google.com/go/spanner v1.45.0
