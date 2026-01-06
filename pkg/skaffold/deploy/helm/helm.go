@@ -138,6 +138,7 @@ type Config interface {
 	GetNamespace() string
 	IsMultiConfig() bool
 	JSONParseConfig() latest.JSONParseConfig
+	TUI() bool
 }
 
 // NewDeployer returns a configured Deployer.  Returns an error if current version of helm is less than 3.1.0.

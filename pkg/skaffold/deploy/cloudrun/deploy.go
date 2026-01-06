@@ -54,6 +54,7 @@ type Config interface {
 	PortForwardOptions() config.PortForwardOptions
 	Mode() config.RunMode
 	Tail() bool
+	TUI() bool
 }
 
 // Deployer deploys code to Google Cloud Run. This implements the Deployer
