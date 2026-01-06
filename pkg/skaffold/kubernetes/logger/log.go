@@ -57,10 +57,12 @@ type LogAggregator struct {
 	events            chan kubernetes.PodEvent
 	trackedContainers trackedContainers
 	namespaces        *[]string
+	tuiLogger         interface{} // Will be *tui.TUILogger when TUI is enabled
 }
 
 type Config interface {
 	Tail() bool
+	TUI() bool
 	IsMultiCluster() bool
 	PipelineForImage(imageName string) (latest.Pipeline, bool)
 	DefaultPipeline() latest.Pipeline
@@ -120,6 +122,13 @@ func (a *LogAggregator) Start(ctx context.Context, out io.Writer) error {
 
 	a.output = out
 
+	// Initialize TUI if enabled
+	if a.config.TUI() {
+		if err := a.StartTUI(ctx); err != nil {
+			return fmt.Errorf("starting TUI: %w", err)
+		}
+	}
+
 	a.podWatcher.Register(a.events)
 	stopWatcher, err := a.podWatcher.Start(ctx, a.kubectlcli.KubeContext, *a.namespaces)
 	if err != nil {
@@ -156,7 +165,11 @@ func (a *LogAggregator) Start(ctx context.Context, out io.Writer) error {
 					}
 
 					if !a.trackedContainers.add(c.ContainerID) && a.config.Tail() {
-						go a.streamContainerLogs(ctx, pod, c)
+						if a.config.TUI() {
+							go a.streamContainerLogsTUI(ctx, pod, c)
+						} else {
+							go a.streamContainerLogs(ctx, pod, c)
+						}
 					}
 				}
 			}

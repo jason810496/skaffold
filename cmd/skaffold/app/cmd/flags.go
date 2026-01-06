@@ -255,6 +255,15 @@ var flagRegistry = []Flag{
 		IsEnum:        true,
 	},
 	{
+		Name:          "tui",
+		Usage:         "Use Terminal UI for log navigation (enables --tail automatically)",
+		Value:         &opts.TUI,
+		DefValue:      false,
+		FlagAddMethod: "BoolVar",
+		DefinedOn:     []string{"dev", "run", "debug", "deploy", "apply"},
+		IsEnum:        true,
+	},
+	{
 		Name:          "force",
 		Usage:         "Recreate Kubernetes resources if necessary for deployment, warning: might cause downtime!",
 		Value:         &opts.Force,
