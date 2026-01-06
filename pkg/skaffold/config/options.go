@@ -59,6 +59,7 @@ type SkaffoldOptions struct {
 	SkipTests                   bool
 	SkipConfigDefaults          bool
 	Tail                        bool
+	TUI                         bool
 	WaitForConnection           bool
 	AutoInit                    bool
 	EnablePlatformNodeAffinity  bool

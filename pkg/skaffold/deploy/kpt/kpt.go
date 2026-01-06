@@ -89,6 +89,7 @@ type Deployer struct {
 type Config interface {
 	kubectl.Config
 	kstatus.Config
+	TUI() bool
 }
 
 // NewDeployer generates a new Deployer object contains the kptDeploy schema.

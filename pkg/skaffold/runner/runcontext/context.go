@@ -342,7 +342,8 @@ func (rc *RunContext) RenderOutput() string                          { return rc
 func (rc *RunContext) StatusCheck() *bool                            { return rc.Opts.StatusCheck.Value() }
 func (rc *RunContext) IterativeStatusCheck() bool                    { return rc.Opts.IterativeStatusCheck }
 func (rc *RunContext) FastFailStatusCheck() bool                     { return rc.Opts.FastFailStatusCheck }
-func (rc *RunContext) Tail() bool                                    { return rc.Opts.Tail }
+func (rc *RunContext) Tail() bool                                    { return rc.Opts.Tail || rc.Opts.TUI }
+func (rc *RunContext) TUI() bool                                     { return rc.Opts.TUI }
 func (rc *RunContext) Trigger() string                               { return rc.Opts.Trigger }
 func (rc *RunContext) WaitForDeletions() config.WaitForDeletions     { return rc.Opts.WaitForDeletions }
 func (rc *RunContext) WatchPollInterval() int                        { return rc.Opts.WatchPollInterval }
